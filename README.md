@@ -1,23 +1,23 @@
-# SARabande: NISAR surface change explorer
+# Dancing with the SARs
 
-Entry for NASA Space Apps 2026, *Dancing with the SARs*.
+Interactive web app to visualise Earth's surface changes (floods, wildfires, deforestation, glacier flow, earthquakes) for the **NASA Space Apps 2026** challenge *Dancing with the SARs* (NASA-ISRO NISAR).
 
-An interactive map that compares two NISAR L-band radar acquisitions and shows where Earth's surface changed (monsoon flooding, river and delta morphology, mangrove inundation).
+## What it does
+- Pick a surface-change event from the sidebar.
+- Two synchronized maps show the **before** and **after** state; pan/zoom moves both.
+- Each event explains **how NISAR SAR would detect it** (backscatter change, HV volume scattering, InSAR phase and coherence).
 
-## Data source
-- **NISAR L2 GCOV** (Geocoded Polarimetric Covariance), L-band backscatter, served via **NASA GIBS** (layer `NISAR_L2_Geocoded_Polarimetric_Covariance`, Oct 2025 to Oct 2026).
-- Source granules are archived at the **ASF DAAC** (NASA Earthdata).
+## Data
+- **Imagery shown in the demo:** NASA GIBS (MODIS Terra true colour), an optical stand-in, because NISAR science products are still being released.
+- **NISAR (target data source):** L-band GCOV (backscatter) and GUNW (interferogram) products from NASA Earthdata / ASF DAAC.
 
-## Features
-- Swipe, change-map, and single-date views of any two same-track acquisitions (12-day repeat).
-- Change layer computed in the browser per pixel from the two NISAR tiles (blue = decrease, orange = increase, adjustable threshold).
-- Sites: Jamuna River, Sundarbans, Meghna Estuary (Bangladesh).
-
-## Limits and next steps
-- Change is computed on the GIBS false-colour composite (HH/HV/VV), not raw dB values.
-- Next: pull GCOV HDF5 from ASF, compute a calibrated dB log-ratio, list granules from the Earthdata CMR API, add global sites.
+## Planned NISAR pipeline
+1. Query ASF DAAC for NISAR GCOV/GUNW over the area of interest.
+2. Compute log-ratio of backscatter between two dates (flood/fire/deforestation) and coherence/phase (earthquake/glacier).
+3. Serve results as map tiles and replace the optical layers in this app.
 
 ## Run
-Open `index.html` via a local server (e.g. VS Code Live Server). Needs internet.
+Open `index.html` in a browser (needs internet for map tiles). No build step.
 
-Tech: Leaflet, NASA GIBS WMTS, vanilla JS.
+## Tech
+Leaflet, NASA GIBS WMTS, plain HTML/JS.
